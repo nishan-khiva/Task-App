@@ -18,7 +18,7 @@ const LogIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/login", form);
+      const response = await axios.post("https://task-app-adqr.onrender.com/api/login", form);
 
       if (response.status === 200) {
         Swal.fire({
