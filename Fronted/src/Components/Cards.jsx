@@ -17,7 +17,7 @@ const Cards = ({ filter, pageTitle }) => {
     const fetchTasks = async () => {
         try {
             setLoading(true);   // ⏳ लोडिंग शुरू
-            const response = await axios.get(`http://localhost:3000/api/task/?${filter}`, {
+            const response = await axios.get(`https://task-app-adqr.onrender.com/api/task/?${filter}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(response.data.data);
@@ -47,7 +47,7 @@ const Cards = ({ filter, pageTitle }) => {
             if (result.isConfirmed) {
                 try {
                     setLoading(true);
-                    await axios.delete(`http://localhost:3000/api/task/${id}`, {
+                    await axios.delete(`https://task-app-adqr.onrender.com/api/task/${id}`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setTasks((prevTasks) => prevTasks.filter(task => task._id !== id));
@@ -70,7 +70,7 @@ const Cards = ({ filter, pageTitle }) => {
     const handleToggle = async (id, type, currentStatus) => {
         try {
             const updateField = type === "complete" ? { complete: !currentStatus } : { important: !currentStatus };
-            await axios.put(`http://localhost:3000/api/task/${id}`, updateField, {
+            await axios.put(`https://task-app-adqr.onrender.com/api/task/${id}`, updateField, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks((prevTasks) =>
