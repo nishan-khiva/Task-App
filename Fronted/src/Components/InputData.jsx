@@ -27,10 +27,10 @@ const InputData = ({ InputDiv, setInputDiv, editTask, setEditTask,refresh }) => 
                 }
             };
             if (editTask) {
-                await axios.put(`http://localhost:3000/api/task/${editTask._id}`, task, config);
+                await axios.put(`https://task-app-adqr.onrender.com/api/task/${editTask._id}`, task, config);
                 setEditTask(null);
             } else {
-                await axios.post("http://localhost:3000/api/task/", task, config);
+                await axios.post("https://task-app-adqr.onrender.com/api/task/", task, config);
             }
             setTask({ tittle: "", desc: "" });
             setInputDiv("hidden");
