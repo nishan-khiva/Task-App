@@ -35,7 +35,7 @@ const Profile = () => {
     }, [token]);
     const fetchTasksCount = async (token) => {
         try {
-            const response = await axios.get("http://localhost:3000/api/task/count", {
+            const response = await axios.get("https://task-app-adqr.onrender.com/api/task/count", {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -56,7 +56,7 @@ const Profile = () => {
     };
     const handleSave = async () => {
         try {
-            const response = await axios.put('http://localhost:3000/api/update',
+            const response = await axios.put('https://task-app-adqr.onrender.com/api/update',
                 { username: userName, email },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
