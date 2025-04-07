@@ -20,7 +20,7 @@ const ChangePassword = () => {
     }
     try {
       const response = await axios.put(
-        'http://localhost:3000/api/password',
+        'https://task-app-adqr.onrender.com/api/password',
         { oldPassword, newPassword, confirmPassword },
         {
           headers: { Authorization: `Bearer ${token}` }
