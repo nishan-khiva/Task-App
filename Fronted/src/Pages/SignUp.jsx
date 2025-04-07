@@ -25,7 +25,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/api/signup", formData);
+      const response = await axios.post("https://task-app-adqr.onrender.com/api/signup", formData);
       if (response.status === 201) {
         Swal.fire({
           icon: 'success',
