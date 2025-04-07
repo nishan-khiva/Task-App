@@ -14,7 +14,7 @@ const PrivateRoute = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:3000/api/protected', {
+        const response = await axios.get('https://task-app-adqr.onrender.com/api/protected', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
