@@ -4,7 +4,7 @@ import Cards from '../Components/Cards';
 const Important = () => {
   return (
     <>
-      <Cards filter='important=true' pageTitle='Important Tasks'/>
+      <Cards filter='important=true' pageTitle='Important Tasks' defaultValues={{ important: true }}/>
     </>
   );
 };
