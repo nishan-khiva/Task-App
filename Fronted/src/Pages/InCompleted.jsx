@@ -5,7 +5,7 @@ const InCompleted = () => {
 
   return (
     <>
-      <Cards filter='complete=false' pageTitle='Incomplete Tasks' />  
+      <Cards filter='complete=false' pageTitle='Incomplete Tasks' defaultValues={{ complete: false }} />  
     </>
   );
 };
