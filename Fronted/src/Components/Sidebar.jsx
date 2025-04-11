@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaTasks, FaBookmark, FaCheckCircle, FaTimesCircle, FaBars, FaTimes } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { FaUser, FaTasks, FaBookmark, FaCheckCircle, FaTimesCircle, FaBars, FaTimes, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
 import { jwtDecode } from "jwt-decode";
 
 const Sidebar = () => {
@@ -8,6 +8,7 @@ const Sidebar = () => {
     const [userName, setUserName] = useState("Guest");
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -22,8 +23,22 @@ const Sidebar = () => {
         }
     }, []);
 
+    // Click outside to close dropdown
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropmenu(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const toggleMenu = () => setIsOpen(!isOpen);
-    const Profile = () => setDropmenu(!dropmenu);
+    const toggleProfile = () => setDropmenu(prev => !prev);
+
     const handleNavigation = (path) => {
         navigate(path);
         setDropmenu(false);
@@ -39,22 +54,26 @@ const Sidebar = () => {
             >
                 {isOpen ? <FaTimes size={12} /> : <FaBars size={12} />}
             </button>
+
             <div className={`fixed top-1.5 left-0.5 z-40 h-full w-[70%] sm:w-[50%] md:w-[40%] lg:w-[23vw] bg-gray-400 rounded-[8px] p-4 border-2 border-gray-600 transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:relative lg:h-[98vh]`}>
                 <h2 className="text-lg font-bold">Menu bar</h2>
-                <button onClick={Profile} className="w-full text-left">
+                <button onClick={toggleProfile} className="w-full text-left relative" ref={dropdownRef}>
                     <div className="flex items-center gap-2 mt-3">
                         <FaUser size={20} color="black" />
                         <p className="font-semibold">{userName}</p>
+                        {dropmenu ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
+
+                    {dropmenu && (
+                        <div className="absolute left-0 mt-2 flex flex-col items-start w-[12vw] min-w-[150px] max-w-[250px] bg-gray-700 rounded-lg shadow-lg z-50 md:w-[10vw] lg:w-[8vw]">
+                            <button onClick={() => handleNavigation('profile')} className="px-3 py-2 text-white hover:text-gray-400">View Profile</button>
+                            <button onClick={() => handleNavigation('changepassword')} className="px-3 py-2 text-white hover:text-gray-400">Change Password</button>
+                            <button onClick={() => handleNavigation('/')} className="px-3 py-2 text-white hover:text-gray-400">Log Out</button>
+                        </div>
+                    )}
                 </button>
+
                 <hr className="my-2" />
-                {dropmenu && (
-                    <div className="absolute flex flex-col items-start w-[12vw] min-w-[150px] max-w-[250px] bg-gray-700 rounded-lg shadow-lg z-50 md:w-[10vw] lg:w-[8vw]">
-                        <button onClick={() => handleNavigation('profile')} className="px-3 py-2 text-white hover:text-gray-400">View Profile</button>
-                        <button onClick={() => handleNavigation('changepassword')} className="px-3 py-2 text-white hover:text-gray-400">Change Password</button>
-                        <button onClick={() => handleNavigation('/')} className="px-3 py-2 text-white hover:text-gray-400">Log Out</button>
-                    </div>
-                )}
                 <div className='mt-4 leading-9'>
                     <button onClick={() => handleNavigation('/home')} className="flex items-center gap-2 hover:text-gray-600">  <FaTasks /><h3>All Task</h3></button>
                     <button onClick={() => handleNavigation('important')} className="flex items-center gap-2 hover:text-gray-600">   <FaBookmark /><h3>Important Task</h3></button>
@@ -62,6 +81,7 @@ const Sidebar = () => {
                     <button onClick={() => handleNavigation('incomplete')} className="flex items-center gap-2 hover:text-gray-600">   <FaTimesCircle /><h3>Incomplete Task</h3></button>
                 </div>
             </div>
+
             {/* Overlay for mobile */}
             {isOpen && (
                 <div
