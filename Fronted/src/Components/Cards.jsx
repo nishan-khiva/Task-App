@@ -5,7 +5,7 @@ import InputData from './InputData';
 import { FaPlusCircle } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
-const Cards = ({ filter, pageTitle }) => {
+const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
     const [inputDiv, setInputDiv] = useState("hidden");
     const [editTask, setEditTask] = useState(null);
     const [tasks, setTasks] = useState([]);
@@ -141,6 +141,7 @@ const Cards = ({ filter, pageTitle }) => {
                 editTask={editTask}
                 setEditTask={setEditTask}
                 refresh={fetchTasks}
+                defaultValues={defaultValues}
             />
         </>
     );
