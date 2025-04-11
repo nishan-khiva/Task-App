@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
-const InputData = ({ InputDiv, setInputDiv, editTask, setEditTask,refresh }) => {
+const InputData = ({ InputDiv, setInputDiv, editTask, setEditTask,refresh,defaultValues }) => {
     const [task, setTask] = useState({ tittle: "", desc: "" });
     useEffect(() => {
-        if (editTask) {
+          if (editTask) {
             setTask({ tittle: editTask.tittle, desc: editTask.desc });
         } else {
-            setTask({ tittle: "", desc: "" });
+            setTask({ tittle: "", desc: "", ...defaultValues });
         }
-    }, [editTask]);
+    }, [editTask, defaultValues]);
 
     const handleChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value });
