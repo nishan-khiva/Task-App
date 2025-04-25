@@ -17,7 +17,6 @@ const LogIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
     try {
       const response = await axios.post("https://task-app-adqr.onrender.com/api/login", form);
 
