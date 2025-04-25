@@ -7,7 +7,7 @@ const LogIn = () => {
     email: 'nishankhiva@gmail.com',
     password: '1234'
   });
-  const [loading, setLoading] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -29,8 +29,6 @@ const LogIn = () => {
           showConfirmButton: false,
           timer: 2000
         });
-
-        // Token को localStorage में सेव करें
         localStorage.setItem('token', response.data.token);
 
         // // टैब्स को अपडेट करने के लिए localStorage event trigger करें
@@ -48,20 +46,12 @@ const LogIn = () => {
         Swal.fire('Error', error.response.data.message, 'error');
       } else {
         Swal.fire('Oops!', 'Something went wrong. Please try again.', 'error');
-      } finally {
-      setLoading(false); 
-    }
+      } 
     }
   };
 
 return (
   <div className='w-full bg-gray-400 h-screen flex justify-center items-center'>
-    {loading ? (
-      <div className="loader text-white text-xl font-semibold">
-        {/*  loader shown here */}
-        Loading...
-      </div>
-    ) : (
       <div className='bg-gray-700 w-[400px] p-6 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-bold text-white text-center mb-4'>Log In</h2>
 
@@ -102,7 +92,6 @@ return (
           </span>
         </div>
       </div>
-    )}
   </div>
 );
 
