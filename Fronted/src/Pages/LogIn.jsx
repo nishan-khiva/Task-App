@@ -8,6 +8,7 @@ const LogIn = () => {
     email: 'nishankhiva@gmail.com',
     password: '1234'
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const LogIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const response = await axios.post("https://task-app-adqr.onrender.com/api/login", form);
 
@@ -48,10 +50,17 @@ const LogIn = () => {
       } else {
         Swal.fire('Oops!', 'Something went wrong. Please try again.', 'error');
       }
-    }
+    }finally {
+  setLoading(false); // ensure it's always turned off
+}
   };
 
-  return (
+ return (
+  loading ? (
+    <div className="w-full h-screen flex items-center justify-center bg-gray-100">
+       <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
+    </div>
+  ) : (
     <div className='w-full bg-gray-400 h-screen flex justify-center items-center'>
       <div className='bg-gray-700 w-[400px] p-6 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-bold text-white text-center mb-4'>Log In</h2>
@@ -94,7 +103,8 @@ const LogIn = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+);
+
 
 export default LogIn;
