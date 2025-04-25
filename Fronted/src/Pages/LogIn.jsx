@@ -5,8 +5,8 @@ import Swal from 'sweetalert2';
 
 const LogIn = () => {
   const [form, setForm] = useState({
-    email: '',
-    password: ''
+    email: 'nishankhiva@gmail.com',
+    password: '1234'
   });
 
   const navigate = useNavigate();
