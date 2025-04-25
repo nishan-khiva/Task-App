@@ -54,7 +54,7 @@ const LogIn = () => {
   return (
     <div className='w-full bg-gray-400 h-screen flex justify-center items-center'>
       {loading ? (
-        <div className='text-xl font-semibold text-white'>Loading...</div> // 👈 Simple loader
+         <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>// 👈 Simple loader
       ) : (
         <div className='bg-gray-700 w-[400px] p-6 rounded-lg shadow-lg'>
           <h2 className='text-2xl font-bold text-white text-center mb-4'>Log In</h2>
