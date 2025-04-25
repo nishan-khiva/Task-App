@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -36,7 +35,7 @@ const LogIn = () => {
 
         // // टैब्स को अपडेट करने के लिए localStorage event trigger करें
         // window.dispatchEvent(new Event("storage"));
-
+       
         // setIsAuthenticated(true);
         navigate('/home');
         setForm({ email: '', password: '' });
@@ -49,19 +48,20 @@ const LogIn = () => {
         Swal.fire('Error', error.response.data.message, 'error');
       } else {
         Swal.fire('Oops!', 'Something went wrong. Please try again.', 'error');
-      }
-    }finally {
-  setLoading(false); // ensure it's always turned off
-}
+      } finally {
+      setLoading(false); 
+    }
+    }
   };
 
- return (
-  loading ? (
-    <div className="w-full h-screen flex items-center justify-center bg-gray-100">
-       <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
-    </div>
-  ) : (
-    <div className='w-full bg-gray-400 h-screen flex justify-center items-center'>
+return (
+  <div className='w-full bg-gray-400 h-screen flex justify-center items-center'>
+    {loading ? (
+      <div className="loader text-white text-xl font-semibold">
+        {/*  loader shown here */}
+        Loading...
+      </div>
+    ) : (
       <div className='bg-gray-700 w-[400px] p-6 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-bold text-white text-center mb-4'>Log In</h2>
 
@@ -102,8 +102,8 @@ const LogIn = () => {
           </span>
         </div>
       </div>
-    </div>
-  )
+    )}
+  </div>
 );
 
 
