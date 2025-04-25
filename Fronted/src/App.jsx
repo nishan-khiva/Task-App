@@ -22,6 +22,7 @@ function App() {
         <Routes>
           {/* पब्लिक रूट्स */}
           <Route path="/" element={<LogIn />} />
+            <Route path="*" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
 
           {/* प्राइवेट रूट्स */}
