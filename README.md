@@ -9,9 +9,6 @@ A full-featured **Task Management App** built with the **MERN Stack** (MongoDB, 
 - 👤 User-specific tasks (Each user sees only their tasks)
 - 🔐 JWT Authentication with HTTP-Only Cookies
 - 🧠 State Management using Redux Toolkit
-- 📆 Task Due Dates and Status
-- 🌓 Light/Dark Mode (Optional)
-- 🔍 Filter and Search Tasks (Optional)
 
 ## 🛠️ Tech Stack
 
