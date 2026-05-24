@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
+const url = import.meta.env.VITE_API_URL
 
 const Profile = () => {
     const [userName, setUserName] = useState("Guest");
@@ -35,7 +36,7 @@ const Profile = () => {
     }, [token]);
     const fetchTasksCount = async (token) => {
         try {
-            const response = await axios.get("https://task-app-adqr.onrender.com/api/task/count", {
+            const response = await axios.get(`${url}/api/task/count`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -56,7 +57,7 @@ const Profile = () => {
     };
     const handleSave = async () => {
         try {
-            const response = await axios.put('https://task-app-adqr.onrender.com/api/update',
+            const response = await axios.put(`${url}/api/update`,
                 { username: userName, email },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

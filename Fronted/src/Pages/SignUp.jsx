@@ -3,16 +3,21 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
+const url = import.meta.env.VITE_API_URL;
+
 const SignUp = () => {
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: ''
   });
 
-  const navigate = useNavigate();  // ✅ Navigation hook
+  const [loading, setLoading] = useState(false);
 
-  // Handle Form Change
+  const navigate = useNavigate();
+
+  // HANDLE INPUT CHANGE
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,84 +25,291 @@ const SignUp = () => {
     });
   };
 
-  // Handle Form Submit
+  // HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
-      const response = await axios.post("https://task-app-adqr.onrender.com/api/signup", formData);
+
+      const response = await axios.post(
+        `${url}/api/signup`,
+        formData
+      );
+
       if (response.status === 201) {
+
+        localStorage.setItem(
+          'token',
+          response.data.token
+        );
+
         Swal.fire({
           icon: 'success',
           title: 'Welcome!',
-          text: 'Sign Up Successfully!',
+          text: 'Account Created Successfully',
           showConfirmButton: false,
           timer: 2000
         });
-        localStorage.setItem('token', response.data.token);
+
+        setFormData({
+          username: '',
+          email: '',
+          password: ''
+        });
+
         navigate('/');
-        setFormData({ username: '', email: '', password: '' });
-      } else {
-        alert("Failed to register");
+
       }
+
     } catch (error) {
-      console.error("Error:", error);
+
+      console.log(error);
+
       if (error.response) {
-        alert(error.response.data.message);  //Backend error message
+
+        Swal.fire(
+          'Error',
+          error.response.data.message,
+          'error'
+        );
+
       } else {
-        alert("Something went wrong. Please try again.");
+
+        Swal.fire(
+          'Oops!',
+          'Something went wrong',
+          'error'
+        );
+
       }
+
+    } finally {
+
+      setLoading(false);
+
     }
   };
 
   return (
-    <div className='w-full bg-gray-400 h-screen flex justify-center items-center'>
-      <div className='bg-gray-700 w-[400px] p-6 rounded-lg shadow-lg'>
-        <h2 className='text-2xl font-bold text-white text-center mb-4'>Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder='Enter your username'
-            className='w-full bg-gray-300 px-3 py-2 rounded mb-3 outline-none focus:ring-2 focus:ring-blue-500'
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
 
-          <input
-            type="email"
-            name="email"
-            placeholder='Enter your email'
-            className='w-full bg-gray-300 px-3 py-2 rounded mb-3 outline-none focus:ring-2 focus:ring-blue-500'
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+    <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6 overflow-hidden">
 
-          <input
-            type="password"
-            name="password"
-            placeholder='Enter your password'
-            className='w-full bg-gray-300 px-3 py-2 rounded mb-3 outline-none focus:ring-2 focus:ring-blue-500'
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+      {/* BACKGROUND GLOW */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500/10 blur-[120px] rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full"></div>
 
-          <button type="submit" className='w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition'>
-            Sign Up
-          </button>
-        </form>
+      {/* MAIN CONTAINER */}
+      <div className="relative z-10 w-full max-w-7xl rounded-[35px] overflow-hidden border border-white/10 bg-[#0f172a]/90 backdrop-blur-xl shadow-2xl grid lg:grid-cols-2">
 
-        <div className='text-center text-white mt-4'>
-          Already have an account?
-          <span
-            className='text-red-400 cursor-pointer ml-1 hover:underline'
-            onClick={() => navigate('/')}
-          >
-            Log In
-          </span>
+        {/* LEFT SECTION */}
+        <div className="hidden lg:flex flex-col justify-between p-16 bg-gradient-to-br from-[#0f172a] via-[#111827] to-[#1e293b] relative">
+
+          <div>
+
+            {/* LOGO */}
+            <div className="flex items-center gap-4 mb-20">
+
+              <div className="w-16 h-16 rounded-3xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-300 text-2xl font-bold shadow-lg shadow-cyan-500/10">
+                TM
+              </div>
+
+              <div>
+
+                <h1 className="text-3xl font-bold text-white tracking-wide">
+                  TaskFlow
+                </h1>
+
+                <p className="text-slate-400 mt-1">
+                  Productivity & Workspace Platform
+                </p>
+
+              </div>
+            </div>
+
+            {/* TEXT */}
+            <div>
+
+              <h2 className="text-6xl font-black text-white leading-tight">
+                Start Managing
+                <br />
+                Your Tasks
+                <br />
+                Smarter
+              </h2>
+
+              <p className="text-slate-400 text-lg leading-relaxed mt-8 max-w-xl">
+                Create your account and manage projects,
+                teams and productivity from one modern dashboard.
+              </p>
+
+            </div>
+
+            {/* STATS */}
+            <div className="grid grid-cols-2 gap-6 mt-16">
+
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-7 backdrop-blur-xl">
+
+                <h3 className="text-5xl font-bold text-cyan-300">
+                  24K+
+                </h3>
+
+                <p className="text-slate-400 mt-3">
+                  Active Users
+                </p>
+
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-7 backdrop-blur-xl">
+
+                <h3 className="text-5xl font-bold text-cyan-300">
+                  99%
+                </h3>
+
+                <p className="text-slate-400 mt-3">
+                  User Satisfaction
+                </p>
+
+              </div>
+
+            </div>
+          </div>
+
+          {/* BOTTOM BOX */}
+          <div className="bg-white/5 border border-white/10 rounded-3xl p-7 backdrop-blur-xl mt-12">
+
+            <p className="text-slate-300 text-lg leading-relaxed">
+              Organize workflows, collaborate with teams and
+              improve productivity with powerful task tools.
+            </p>
+
+          </div>
+
+        </div>
+
+        {/* RIGHT SECTION */}
+        <div className="bg-[#020617]/80 p-8 lg:p-16 flex items-center justify-center">
+
+          <div className="w-full max-w-md">
+
+            {/* HEADING */}
+            <div className="mb-10">
+
+              <h2 className="text-5xl font-bold text-white">
+                Create Account
+              </h2>
+
+              <p className="text-slate-400 mt-4 text-lg">
+                Join and start managing your workflow.
+              </p>
+
+            </div>
+
+            {/* FORM */}
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
+
+              {/* USERNAME */}
+              <div>
+
+                <label className="block text-sm font-medium text-slate-300 mb-3">
+                  Username
+                </label>
+
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Enter your username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  className="w-full h-14 px-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 outline-none focus:border-cyan-400 focus:bg-white/[0.07] transition-all"
+                />
+
+              </div>
+
+              {/* EMAIL */}
+              <div>
+
+                <label className="block text-sm font-medium text-slate-300 mb-3">
+                  Email Address
+                </label>
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full h-14 px-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 outline-none focus:border-cyan-400 focus:bg-white/[0.07] transition-all"
+                />
+
+              </div>
+
+              {/* PASSWORD */}
+              <div>
+
+                <label className="block text-sm font-medium text-slate-300 mb-3">
+                  Password
+                </label>
+
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="w-full h-14 px-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 outline-none focus:border-cyan-400 focus:bg-white/[0.07] transition-all"
+                />
+
+              </div>
+
+              {/* BUTTON */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full h-14 rounded-2xl bg-cyan-400 hover:bg-cyan-300 disabled:opacity-70 disabled:cursor-not-allowed transition-all text-black font-bold text-lg shadow-lg shadow-cyan-500/20"
+              >
+                {
+                  loading
+                    ? 'Creating Account...'
+                    : 'Create Account'
+                }
+              </button>
+
+            </form>
+
+            {/* DIVIDER */}
+            <div className="relative my-10">
+
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/10"></div>
+              </div>
+
+              <div className="relative flex justify-center text-sm">
+
+                <span className="bg-[#020617] px-4 text-slate-500">
+                  ALREADY REGISTERED?
+                </span>
+
+              </div>
+
+            </div>
+
+            {/* LOGIN BUTTON */}
+            <button
+              onClick={() => navigate('/')}
+              className="w-full h-14 rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300 font-semibold hover:bg-cyan-400 hover:text-black transition-all duration-300 shadow-lg shadow-cyan-500/10"
+            >
+              Login Instead
+            </button>
+
+          </div>
         </div>
       </div>
     </div>

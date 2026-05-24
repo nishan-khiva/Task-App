@@ -13,8 +13,8 @@ const PrivateRoute = () => {
           setIsAuthenticated(false);
           return;
         }
-
-        const response = await axios.get('https://task-app-adqr.onrender.com/api/protected', {
+        const url = import.meta.env.VITE_API_URL
+        const response = await axios.get(`${url}/api/protected`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

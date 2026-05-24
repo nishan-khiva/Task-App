@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+const url = import.meta.env.VITE_API_URL
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -20,7 +21,7 @@ const ChangePassword = () => {
     }
     try {
       const response = await axios.put(
-        'https://task-app-adqr.onrender.com/api/password',
+        `${url}/api/password`,
         { oldPassword, newPassword, confirmPassword },
         {
           headers: { Authorization: `Bearer ${token}` }

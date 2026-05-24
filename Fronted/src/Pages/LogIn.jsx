@@ -26,8 +26,9 @@ const LogIn = () => {
     setLoading(true);
 
     try {
+      const url = import.meta.env.VITE_API_URL
       const response = await axios.post(
-        'https://task-app-adqr.onrender.com/api/login',
+        `${url}/login`,
         form
       );
 
@@ -285,16 +286,20 @@ const LogIn = () => {
             </div>
 
             {/* FOOTER */}
-            <p className="text-center text-slate-500 mt-10">
+            <div className="text-center mt-10">
 
-              Don&apos;t have an account?
+              <p className="text-slate-500 text-sm">
+                Don&apos;t have an account?
+              </p>
 
-              <span className="text-cyan-400 ml-2 cursor-pointer hover:text-cyan-300 transition">
-                Create Account
-              </span>
+              <button
+                onClick={() => navigate('/signup')}
+                className="mt-4 w-full h-14 rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300 font-semibold hover:bg-cyan-400 hover:text-black transition-all duration-300 shadow-lg shadow-cyan-500/10"
+              >
+                Create New Account
+              </button>
 
-            </p>
-
+            </div>
           </div>
         </div>
       </div>

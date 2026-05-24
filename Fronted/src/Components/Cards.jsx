@@ -16,8 +16,9 @@ const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
     // Fetch Tasks
     const fetchTasks = async () => {
         try {
-            setLoading(true);   // ⏳ लोडिंग शुरू
-            const response = await axios.get(`https://task-app-adqr.onrender.com/api/task/?${filter}`, {
+            setLoading(true);
+            const url = import.meta.env.VITE_API_URL
+            const response = await axios.get(`${url}/api/task/?${filter}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(response.data.data);
@@ -47,7 +48,8 @@ const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
             if (result.isConfirmed) {
                 try {
                     setLoading(true);
-                    await axios.delete(`https://task-app-adqr.onrender.com/api/task/${id}`, {
+                    const url = import.meta.env.VITE_API_URL
+                    await axios.delete(`${url}/api/task/${id}`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setTasks((prevTasks) => prevTasks.filter(task => task._id !== id));
@@ -69,8 +71,9 @@ const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
     // Complete/Incomplete  & Important
     const handleToggle = async (id, type, currentStatus) => {
         try {
+            const url = import.meta.env.VITE_API_URL
             const updateField = type === "complete" ? { complete: !currentStatus } : { important: !currentStatus };
-            await axios.put(`https://task-app-adqr.onrender.com/api/task/${id}`, updateField, {
+            await axios.put(`${url}/api/task/${id}`, updateField, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks((prevTasks) =>

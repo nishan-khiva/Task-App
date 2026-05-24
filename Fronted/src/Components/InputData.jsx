@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
+const url = import.meta.env.VITE_API_URL
 
 const InputData = ({ InputDiv, setInputDiv, editTask, setEditTask,refresh,defaultValues }) => {
     const [task, setTask] = useState({ tittle: "", desc: "" });
@@ -27,10 +28,10 @@ const InputData = ({ InputDiv, setInputDiv, editTask, setEditTask,refresh,defaul
                 }
             };
             if (editTask) {
-                await axios.put(`https://task-app-adqr.onrender.com/api/task/${editTask._id}`, task, config);
+                await axios.put(`${url}/api/task/${editTask._id}`, task, config);
                 setEditTask(null);
             } else {
-                await axios.post("https://task-app-adqr.onrender.com/api/task/", task, config);
+                await axios.post(`${url}/api/task/`, task, config);
             }
             setTask({ tittle: "", desc: "" });
             setInputDiv("hidden");
