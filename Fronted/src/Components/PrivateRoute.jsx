@@ -14,7 +14,7 @@ const PrivateRoute = () => {
           return;
         }
         const url = import.meta.env.VITE_API_URL
-        const response = await axios.get(`${url}/api/protected`, {
+        const response = await axios.get(`${url}/protected`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

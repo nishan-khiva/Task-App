@@ -21,7 +21,7 @@ const ChangePassword = () => {
     }
     try {
       const response = await axios.put(
-        `${url}/api/password`,
+        `${url}/password`,
         { oldPassword, newPassword, confirmPassword },
         {
           headers: { Authorization: `Bearer ${token}` }

@@ -28,10 +28,10 @@ const InputData = ({ InputDiv, setInputDiv, editTask, setEditTask,refresh,defaul
                 }
             };
             if (editTask) {
-                await axios.put(`${url}/api/task/${editTask._id}`, task, config);
+                await axios.put(`${url}/task/${editTask._id}`, task, config);
                 setEditTask(null);
             } else {
-                await axios.post(`${url}/api/task/`, task, config);
+                await axios.post(`${url}/task/`, task, config);
             }
             setTask({ tittle: "", desc: "" });
             setInputDiv("hidden");

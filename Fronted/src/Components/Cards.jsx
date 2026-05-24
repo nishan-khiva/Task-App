@@ -18,7 +18,7 @@ const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
         try {
             setLoading(true);
             const url = import.meta.env.VITE_API_URL
-            const response = await axios.get(`${url}/api/task/?${filter}`, {
+            const response = await axios.get(`${url}/task/?${filter}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks(response.data.data);
@@ -49,7 +49,7 @@ const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
                 try {
                     setLoading(true);
                     const url = import.meta.env.VITE_API_URL
-                    await axios.delete(`${url}/api/task/${id}`, {
+                    await axios.delete(`${url}/task/${id}`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setTasks((prevTasks) => prevTasks.filter(task => task._id !== id));
@@ -73,7 +73,7 @@ const Cards = ({ filter, pageTitle,defaultValues = {} }) => {
         try {
             const url = import.meta.env.VITE_API_URL
             const updateField = type === "complete" ? { complete: !currentStatus } : { important: !currentStatus };
-            await axios.put(`${url}/api/task/${id}`, updateField, {
+            await axios.put(`${url}/task/${id}`, updateField, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setTasks((prevTasks) =>

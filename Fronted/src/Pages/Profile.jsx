@@ -36,7 +36,7 @@ const Profile = () => {
     }, [token]);
     const fetchTasksCount = async (token) => {
         try {
-            const response = await axios.get(`${url}/api/task/count`, {
+            const response = await axios.get(`${url}/task/count`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -57,7 +57,7 @@ const Profile = () => {
     };
     const handleSave = async () => {
         try {
-            const response = await axios.put(`${url}/api/update`,
+            const response = await axios.put(`${url}/update`,
                 { username: userName, email },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
